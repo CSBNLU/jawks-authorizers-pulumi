@@ -44,13 +44,14 @@ export const create: <Payload>(
 ) => {
   const { authorizer } = deps;
 
-  const authorizerEventSchema = z.object({
-    type: z.literal("TOKEN"),
-    authorizationToken: z.string().regex(/^Bearer .+/),
-    methodArn: z.string(),
-  });
-
   return async (event) => {
+
+    const authorizerEventSchema = z.object({
+      type: z.literal("TOKEN"),
+      authorizationToken: z.string().regex(/^Bearer .+/),
+      methodArn: z.string(),
+    });
+
     const parsedEvent = authorizerEventSchema.parse(event);
     const jwt = parsedEvent.authorizationToken.replace(/^Bearer /, "");
     const authorizerOutcome = await authorizer.authorize({ token: jwt });
