@@ -29,7 +29,7 @@ export const create: <Payload>(
             .literal(audience)
             .or(z.array(z.string()).refine((val) => val.includes(audience))),
         });
-        
+
         const JWKS = jose.createRemoteJWKSet(new URL(jwksUri.get()));
 
         try {
