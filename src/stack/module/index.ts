@@ -1,1 +1,1 @@
-export * as JWT from './jwt';
+export * as JWT from "./jwt";

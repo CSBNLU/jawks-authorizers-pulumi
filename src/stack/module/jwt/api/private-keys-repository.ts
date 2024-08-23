@@ -1,3 +1,3 @@
 export interface PrivateKeyRepository {
-	retrievePrivateKey: () => Promise<{ key: string, kid: string }>;
+  retrievePrivateKey: () => Promise<{ key: string; kid: string }>;
 }

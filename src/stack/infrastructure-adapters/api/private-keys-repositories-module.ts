@@ -1,6 +1,6 @@
-import { JWT } from '../../module'
+import { JWT } from "../../module";
 
 export interface PrivateKeysRepositoriesModule {
-	accessTokenPrivateKeyRepository: JWT.API.PrivateKeyRepository
-	refreshTokenPrivateKeyRepository: JWT.API.PrivateKeyRepository
+  accessTokenPrivateKeyRepository: JWT.API.PrivateKeyRepository;
+  refreshTokenPrivateKeyRepository: JWT.API.PrivateKeyRepository;
 }

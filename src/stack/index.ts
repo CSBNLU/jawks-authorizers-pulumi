@@ -1,1 +1,1 @@
-export * as CompositionRoot from './composition-root';
+export * as CompositionRoot from "./composition-root";

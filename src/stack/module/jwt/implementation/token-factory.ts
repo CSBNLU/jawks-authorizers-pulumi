@@ -1,8 +1,8 @@
-import { API } from '../';
-import * as jwt from 'jsonwebtoken';
+import { API } from "../";
+import * as jwt from "jsonwebtoken";
 
 export interface Dependencies {
-	privateKeysRepository: API.PrivateKeyRepository;
+  privateKeysRepository: API.PrivateKeyRepository;
 }
 
 /**
@@ -13,33 +13,31 @@ export interface Dependencies {
  * @param Props.issuer: The issuer of the token
  */
 export interface Props {
-	audience: string;
-	expiresIn: string | number;
-	issuer: string;
+  audience: string;
+  expiresIn: string | number;
+  issuer: string;
 }
 
-export const create = <TokenPayload>(deps: Dependencies) => (props: Props): API.TokenFactory<TokenPayload> => {
-	const { privateKeysRepository } = deps;
-	const { audience, expiresIn, issuer } = props;
+export const create =
+  <TokenPayload>(deps: Dependencies) =>
+  (props: Props): API.TokenFactory<TokenPayload> => {
+    const { privateKeysRepository } = deps;
+    const { audience, expiresIn, issuer } = props;
 
-	return {
-		generateToken: async ({ payload, sub }) => {
-			const signingKey = await privateKeysRepository.retrievePrivateKey();
-			const token = jwt.sign(
-				{ payload },
-				signingKey.key,
-				{
-					algorithm: 'ES512',
-					audience,
-					expiresIn,
-					issuer,
-					keyid: signingKey.kid,
-					subject: sub
-				}
-			);
-			const { exp } = jwt.decode(token) as { exp: number };
-			const expDate = new Date(exp * 1000);
-			return { exp: expDate, token };
-		}
-	}
-}
+    return {
+      generateToken: async ({ payload, sub }) => {
+        const signingKey = await privateKeysRepository.retrievePrivateKey();
+        const token = jwt.sign({ payload }, signingKey.key, {
+          algorithm: "ES512",
+          audience,
+          expiresIn,
+          issuer,
+          keyid: signingKey.kid,
+          subject: sub,
+        });
+        const { exp } = jwt.decode(token) as { exp: number };
+        const expDate = new Date(exp * 1000);
+        return { exp: expDate, token };
+      },
+    };
+  };

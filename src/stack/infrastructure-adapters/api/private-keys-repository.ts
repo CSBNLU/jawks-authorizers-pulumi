@@ -1,7 +1,7 @@
 export interface Props {
-	secretARN: string;
+  secretARN: string;
 }
 
 export interface PrivateKeysRepository {
-	retrievePrivateKey: (props: Props) => Promise<{ key: string, kid: string }>;
+  retrievePrivateKey: (props: Props) => Promise<{ key: string; kid: string }>;
 }
