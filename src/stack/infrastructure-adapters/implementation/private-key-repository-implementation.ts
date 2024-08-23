@@ -17,18 +17,18 @@ export const create: (props: Props) => API.PrivateKeysRepository = (
 
   const versionStagePrefix = `${kidVersionStagePrefix}${kidVersionStagePrefixSeparator}`;
 
-  const secretSchema = z.object({
-    versionStage: z
-      .array(z.string())
-      .transform((val) =>
-        val.find((versionStage) => versionStage.startsWith(versionStagePrefix)),
-      )
-      .refine((val) => val !== undefined),
-    secret: z.string(),
-  });
-
   return {
     retrievePrivateKey: async (props) => {
+      const secretSchema = z.object({
+        versionStage: z
+          .array(z.string())
+          .transform((val) =>
+            val.find((versionStage) => versionStage.startsWith(versionStagePrefix)),
+          )
+          .refine((val) => val !== undefined),
+        secret: z.string(),
+      });
+
       const { secretARN } = props;
       const secretManagerValue = await secretsManager.getSecretValue({
         SecretId: secretARN,

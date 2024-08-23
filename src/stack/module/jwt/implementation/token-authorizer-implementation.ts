@@ -19,18 +19,19 @@ export const create: <Payload>(
   (props) => {
     const { audience, issuer, jwksUri, payloadSchema } = props;
 
-    const tokenDefaultClaimsSchema = z.object({
-      exp: z.number(),
-      iss: z.literal(issuer),
-      sub: z.string(),
-      aud: z
-        .literal(audience)
-        .or(z.array(z.string()).refine((val) => val.includes(audience))),
-    });
-
     return {
       authorize: async ({ token }) => {
+        const tokenDefaultClaimsSchema = z.object({
+          exp: z.number(),
+          iss: z.literal(issuer),
+          sub: z.string(),
+          aud: z
+            .literal(audience)
+            .or(z.array(z.string()).refine((val) => val.includes(audience))),
+        });
+        
         const JWKS = jose.createRemoteJWKSet(new URL(jwksUri.get()));
+
         try {
           const { payload, protectedHeader } = await jose.jwtVerify(
             token,
