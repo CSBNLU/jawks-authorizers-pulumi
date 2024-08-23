@@ -45,7 +45,6 @@ export const create: <Payload>(
   const { authorizer } = deps;
 
   return async (event) => {
-
     const authorizerEventSchema = z.object({
       type: z.literal("TOKEN"),
       authorizationToken: z.string().regex(/^Bearer .+/),
