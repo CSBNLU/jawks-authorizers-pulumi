@@ -1,6 +1,6 @@
 {
-  "name": "@csbnlu/jawks-pulumi",
-  "version": "0.0.7",
+  "name": "@csbnlu/jawks-authorizers-pulumi",
+  "version": "0.0.1",
   "devDependencies": {
     "@pulumi/aws": "^6.49.1",
     "@pulumi/aws-apigateway": "^2.6.0",
