@@ -21,7 +21,9 @@ export const create: <Payload>(
 
     return {
       authorize: async ({ token }) => {
-        const tokenDefaultClaimsSchema = API.JWTTokenDefaultClaimsSchema.create({ audience, issuer });
+        const tokenDefaultClaimsSchema = API.JWTTokenDefaultClaimsSchema.create(
+          { audience, issuer },
+        );
 
         const JWKS = jose.createRemoteJWKSet(new URL(jwksUri.get()));
 
