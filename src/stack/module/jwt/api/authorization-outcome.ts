@@ -1,4 +1,4 @@
-interface DefaultClaims {
+export interface DefaultClaims {
   aud: string | string[];
   exp: number;
   iss: string;
