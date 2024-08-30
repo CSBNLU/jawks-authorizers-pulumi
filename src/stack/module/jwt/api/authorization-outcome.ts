@@ -9,6 +9,7 @@ export interface AuthorizationGrantedOutcome<Payload> {
   defaultClaims: DefaultClaims;
   outcome: "granted";
   payload: Payload;
+  token: string;
 }
 
 export interface AuthorizationDeniedOutcome {
