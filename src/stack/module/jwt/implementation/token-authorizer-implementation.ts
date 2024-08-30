@@ -3,7 +3,9 @@ import * as jose from "jose";
 import * as pulumi from "@pulumi/pulumi";
 import { z } from "zod";
 
-export interface Dependencies {}
+export interface Dependencies {
+  tokenDefaultClaimsSchemaFactory: () => API.TokenDefaultClaimsSchema;
+}
 
 export interface Props<Payload> {
   audience: string;
@@ -15,15 +17,13 @@ export interface Props<Payload> {
 export const create: <Payload>(
   deps: Dependencies,
 ) => (props: Props<Payload>) => API.Authorizer<Payload> =
-  <Payload>() =>
+  <Payload>(deps: Dependencies) =>
   (props) => {
     const { audience, issuer, jwksUri, payloadSchema } = props;
 
     return {
       authorize: async ({ token }) => {
-        const tokenDefaultClaimsSchema = API.JWTTokenDefaultClaimsSchema.create(
-          { audience, issuer },
-        );
+        const tokenDefaultClaimsSchema = deps.tokenDefaultClaimsSchemaFactory();
 
         const JWKS = jose.createRemoteJWKSet(new URL(jwksUri.get()));
 

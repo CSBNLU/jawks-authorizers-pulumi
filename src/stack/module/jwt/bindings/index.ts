@@ -51,9 +51,13 @@ export const create =
       refreshTokenExpiresIn,
     } = props;
 
+    const tokenDefaultClaimsSchemaFactory = () =>
+      Implementation.tokenDefaultClaimsSchema.create({ audience, issuer });
     return {
       accessTokenAuthorizer:
-        Implementation.tokenAuthorizer.create<AccessTokenPayload>({})({
+        Implementation.tokenAuthorizer.create<AccessTokenPayload>({
+          tokenDefaultClaimsSchemaFactory,
+        })({
           audience,
           issuer,
           jwksUri,
@@ -64,7 +68,9 @@ export const create =
           privateKeysRepository: accessTokenPrivateKeyRepository,
         })({ audience, expiresIn: accessTokenExpiresIn, issuer }),
       refreshTokenAuthorizer:
-        Implementation.tokenAuthorizer.create<RefreshTokenPayload>({})({
+        Implementation.tokenAuthorizer.create<RefreshTokenPayload>({
+          tokenDefaultClaimsSchemaFactory,
+        })({
           audience,
           issuer,
           jwksUri,
@@ -74,5 +80,6 @@ export const create =
         Implementation.tokenFactory.create<RefreshTokenPayload>({
           privateKeysRepository: refreshTokenPrivateKeyRepository,
         })({ audience, expiresIn: refreshTokenExpiresIn, issuer }),
+      tokenDefaultClaimsSchemaFactory,
     };
   };
