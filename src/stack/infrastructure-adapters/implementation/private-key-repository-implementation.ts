@@ -11,14 +11,13 @@ export interface Props {
 export const create: (props: Props) => API.PrivateKeysRepository = (
   props: Props,
 ) => {
-  const { kidVersionStagePrefix, kidVersionStagePrefixSeparator, region } =
-    props;
-  const secretsManager = new SecretsManager({ region });
+  const { kidVersionStagePrefix, kidVersionStagePrefixSeparator, region } = props;
 
   const versionStagePrefix = `${kidVersionStagePrefix}${kidVersionStagePrefixSeparator}`;
 
   return {
     retrievePrivateKey: async (props) => {
+      const secretsManager = new SecretsManager({ region });
       const secretSchema = z.object({
         versionStage: z
           .array(z.string())
