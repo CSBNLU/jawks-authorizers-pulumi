@@ -11,7 +11,8 @@ export interface Props {
 export const create: (props: Props) => API.PrivateKeysRepository = (
   props: Props,
 ) => {
-  const { kidVersionStagePrefix, kidVersionStagePrefixSeparator, region } = props;
+  const { kidVersionStagePrefix, kidVersionStagePrefixSeparator, region } =
+    props;
 
   const versionStagePrefix = `${kidVersionStagePrefix}${kidVersionStagePrefixSeparator}`;
 
