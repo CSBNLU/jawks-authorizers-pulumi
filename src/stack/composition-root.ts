@@ -90,9 +90,15 @@ export const compose = <AccessTokenPayload, RefreshTokenPayload>(
     )(infrastructureAdaptersProps);
 
   return {
-    accessTokenAuthorizer,
-    accessTokenPrivateKeyRepository,
-    refreshTokenAuthorizer,
-    refreshTokenPrivateKeyRepository,
+    accessToken: {
+      authorizer: accessTokenAuthorizer,
+      factory: jwtModule.accessTokenFactory,
+      privateKeyRepository: accessTokenPrivateKeyRepository,
+    },
+    refreshToken: {
+      authorizer: refreshTokenAuthorizer,
+      factory: jwtModule.refreshTokenFactory,
+      privateKeyRepository: refreshTokenPrivateKeyRepository,
+    },
   };
 };
